@@ -23,4 +23,7 @@ A modern, high-contrast Web UI for searching and reserving international flights
 ---
 
 ## 🖥️ Preview
-https://nikhilsam2008.github.io/aerolink
+
+
+## 📄 License
+This project is open-source under the MIT License.
