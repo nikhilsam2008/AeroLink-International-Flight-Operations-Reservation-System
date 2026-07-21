@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroLink | International Flight Reservations</title>
+    <!-- Automatic modern UI styling for pure HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    
+    <style>
+        /* CSS Spinner Keyframes */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <script>
+        // Auto-hide loading overlay
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loading-screen');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }, 800);
+        });
+
+        // Function to handle flight selection
+        function selectFlight(flightNo, airline, price) {
+            const summaryBox = document.getElementById('selected-flight-summary');
+            const flightInput = document.getElementById('selected_flight_input');
+            const confirmationMsg = document.getElementById('confirmation-message');
+            
+            confirmationMsg.style.display = 'none';
+            
+            summaryBox.innerHTML = `
+                <div style="background-color: #1c2a3a; padding: 12px; border-left: 4px solid #00e676; border-radius: 4px; margin-top: 10px;">
+                    <strong style="color: #00e676;">✓ Selected Flight:</strong> ${airline} (${flightNo})<br>
+                    <small style="color: #8a99ad;">Fare: <strong>${price}</strong></small>
+                </div>
+            `;
+            
+            flightInput.value = `${airline} - ${flightNo} (${price})`;
+        }
+
+        // Function to handle confirmation submit
+        function confirmBooking(event) {
+            event.preventDefault();
+            
+            const flightInput = document.getElementById('selected_flight_input').value;
+            const confirmationMsg = document.getElementById('confirmation-message');
+            
+            if (!flightInput) {
+                alert("Please select a flight from the list before confirming!");
+                return;
+            }
+            
+            confirmationMsg.style.display = 'block';
+        }
+    </script>
+</head>
+<body style="max-width: 100%; padding: 0; margin: 0; overflow: hidden; background-color: #0b131e; color: #e1e7ed; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+
+    <!-- FULLSCREEN LOADING OVERLAY -->
+    <div id="loading-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #0b131e; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease;">
+        <h1 style="color: #ffffff; font-size: 2.2rem; margin-bottom: 15px; letter-spacing: 2px;">
+            AERO<span style="color: #00a8ff;">LINK</span>
+        </h1>
+        <div style="width: 45px; height: 45px; border: 4px solid #1c2a3a; border-top: 4px solid #00a8ff; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+        <p style="color: #8a99ad; margin-top: 15px; font-size: 0.95rem;">Initializing Flight Operations Portal...</p>
+    </div>
+
+    <!-- Professional Corporate Header -->
+    <header style="background-color: #121e2d; color: #ffffff; padding: 20px 30px; border-bottom: 2px solid #2b3a4e; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1 style="margin: 0; font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; color: #ffffff;">
+                    AERO<span style="color: #00a8ff;">LINK</span> <span style="font-size: 0.85rem; font-weight: 400; text-transform: uppercase; letter-spacing: 2px; color: #8a99ad;">| International</span>
+                </h1>
+                <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #8a99ad; font-style: normal;">
+                    Global Flight Operations &amp; Reservation System
+                </p>
+            </div>
+            <div style="text-align: right; font-size: 0.8rem; color: #8a99ad;">
+                <span style="display: inline-block; width: 8px; height: 8px; background-color: #00e676; border-radius: 50%; margin-right: 6px;"></span>
+                <strong style="color: #ffffff;">System Online</strong> &bull; Live Schedules
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container: Flexbox side-by-side layout -->
+    <main style="display: flex; gap: 30px; height: 73vh; align-items: flex-start; padding: 0 30px;">
+
+        <!-- LEFT SIDE: Available Flights (Scrollable Only Here) -->
+        <section style="flex: 1.2; height: 100%; overflow-y: auto; padding-right: 20px; border-right: 1px solid #2b3a4e;">
+            <h2 style="margin-top: 0; color: #ffffff; border-bottom: 1px solid #2b3a4e; padding-bottom: 10px;">Available International Flights</h2>
+
+            <!-- Airline 1: Emirates -->
+            <details open style="background-color: #121e2d; border: 1px solid #2b3a4e; border-radius: 8px; padding: 12px; margin-bottom: 15px;">
+                <summary style="cursor: pointer; color: #00a8ff; font-size: 1.05rem;"><strong>🇦🇪 Emirates (EK)</strong></summary>
+                <table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid #2b3a4e; color: #8a99ad; text-align: left;">
+                            <th>Flight No.</th>
+                            <th>Departure</th>
+                            <th>Arrival</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #1c2a3a;">
+                            <td><strong>EK 201</strong></td>
+                            <td>02:15 AM</td>
+                            <td>07:45 AM</td>
+                            <td>Non-stop</td>
+                            <td style="color: #00e676; font-weight: bold;">$780</td>
+                            <td><button type="button" onclick="selectFlight('EK 201', 'Emirates', '$780')" style="background-color: #00a8ff; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Select</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EK 203</strong></td>
+                            <td>11:10 AM</td>
+                            <td>04:25 PM</td>
+                            <td>Non-stop</td>
+                            <td style="color: #00e676; font-weight: bold;">$820</td>
+                            <td><button type="button" onclick="selectFlight('EK 203', 'Emirates', '$820')" style="background-color: #00a8ff; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Select</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </details>
+
+            <!-- Airline 2: Qatar Airways -->
+            <details open style="background-color: #121e2d; border: 1px solid #2b3a4e; border-radius: 8px; padding: 12px; margin-bottom: 15px;">
+                <summary style="cursor: pointer; color: #00a8ff; font-size: 1.05rem;"><strong>🇶🇦 Qatar Airways (QR)</strong></summary>
+                <table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid #2b3a4e; color: #8a99ad; text-align: left;">
+                            <th>Flight No.</th>
+                            <th>Departure</th>
+                            <th>Arrival</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #1c2a3a;">
+                            <td><strong>QR 701</strong></td>
+                            <td>08:00 AM</td>
+                            <td>01:30 PM</td>
+                            <td>Non-stop</td>
+                            <td style="color: #00e676; font-weight: bold;">$750</td>
+                            <td><button type="button" onclick="selectFlight('QR 701', 'Qatar Airways', '$750')" style="background-color: #00a8ff; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Select</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>QR 705</strong></td>
+                            <td>06:45 PM</td>
+                            <td>11:55 PM</td>
+                            <td>1 Stop (DOH)</td>
+                            <td style="color: #00e676; font-weight: bold;">$640</td>
+                            <td><button type="button" onclick="selectFlight('QR 705', 'Qatar Airways', '$640')" style="background-color: #00a8ff; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Select</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </details>
+
+            <!-- Airline 3: Singapore Airlines -->
+            <details open style="background-color: #121e2d; border: 1px solid #2b3a4e; border-radius: 8px; padding: 12px; margin-bottom: 15px;">
+                <summary style="cursor: pointer; color: #00a8ff; font-size: 1.05rem;"><strong>🇸🇬 Singapore Airlines (SQ)</strong></summary>
+                <table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid #2b3a4e; color: #8a99ad; text-align: left;">
+                            <th>Flight No.</th>
+                            <th>Departure</th>
+                            <th>Arrival</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #1c2a3a;">
+                            <td><strong>SQ 026</strong></td>
+                            <td>09:30 AM</td>
+                            <td>02:10 PM</td>
+                            <td>Non-stop</td>
+                            <td style="color: #00e676; font-weight: bold;">$890</td>
+                            <td><button type="button" onclick="selectFlight('SQ 026', 'Singapore Airlines', '$890')" style="background-color: #00a8ff; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Select</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>SQ 322</strong></td>
+                            <td>11:45 PM</td>
+                            <td>06:15 AM (+1)</td>
+                            <td>Non-stop</td>
+                            <td style="color: #00e676; font-weight: bold;">$910</td>
+                            <td><button type="button" onclick="selectFlight('SQ 322', 'Singapore Airlines', '$910')" style="background-color: #00a8ff; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Select</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </details>
+
+            <!-- Airline 4: Air India -->
+            <details open style="background-color: #121e2d; border: 1px solid #2b3a4e; border-radius: 8px; padding: 12px; margin-bottom: 15px;">
+                <summary style="cursor: pointer; color: #00a8ff; font-size: 1.05rem;"><strong>🇮🇳 Air India (AI)</strong></summary>
+                <table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid #2b3a4e; color: #8a99ad; text-align: left;">
+                            <th>Flight No.</th>
+                            <th>Departure</th>
+                            <th>Arrival</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #1c2a3a;">
+                            <td><strong>AI 101</strong></td>
+                            <td>01:30 AM</td>
+                            <td>06:55 AM</td>
+                            <td>Non-stop</td>
+                            <td style="color: #00e676; font-weight: bold;">$680</td>
+                            <td><button type="button" onclick="selectFlight('AI 101', 'Air India', '$680')" style="background-color: #00a8ff; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Select</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>AI 127</strong></td>
+                            <td>02:00 PM</td>
+                            <td>07:30 PM</td>
+                            <td>Non-stop</td>
+                            <td style="color: #00e676; font-weight: bold;">$710</td>
+                            <td><button type="button" onclick="selectFlight('AI 127', 'Air India', '$710')" style="background-color: #00a8ff; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Select</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </details>
+        </section>
+
+        <!-- RIGHT SIDE: Search Flights Card (Fixed / Non-scrollable) -->
+        <section style="flex: 0.8; height: 100%; overflow-y: auto;">
+            <div style="background-color: #121e2d; border: 1px solid #2b3a4e; border-radius: 8px; padding: 20px;">
+                <h2 style="margin-top: 0; color: #ffffff; border-bottom: 1px solid #2b3a4e; padding-bottom: 10px;">Search &amp; Book</h2>
+                
+                <form onsubmit="confirmBooking(event)">
+                    <input type="hidden" id="selected_flight_input" name="selected_flight" value="">
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="from" style="display: block; margin-bottom: 5px; color: #8a99ad; font-size: 0.85rem;">Departure Airport (From):</label>
+                        <input type="text" id="from" name="from" placeholder="e.g. London Heathrow (LHR)" required style="width: 100%; padding: 10px; background-color: #1c2a3a; border: 1px solid #2b3a4e; border-radius: 4px; color: #ffffff;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="to" style="display: block; margin-bottom: 5px; color: #8a99ad; font-size: 0.85rem;">Destination Airport (To):</label>
+                        <input type="text" id="to" name="to" placeholder="e.g. John F. Kennedy (JFK)" required style="width: 100%; padding: 10px; background-color: #1c2a3a; border: 1px solid #2b3a4e; border-radius: 4px; color: #ffffff;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="departure" style="display: block; margin-bottom: 5px; color: #8a99ad; font-size: 0.85rem;">Departure Date:</label>
+                        <input type="date" id="departure" name="departure" required style="width: 100%; padding: 10px; background-color: #1c2a3a; border: 1px solid #2b3a4e; border-radius: 4px; color: #ffffff;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="passengers" style="display: block; margin-bottom: 5px; color: #8a99ad; font-size: 0.85rem;">Passengers:</label>
+                        <select id="passengers" name="passengers" style="width: 100%; padding: 10px; background-color: #1c2a3a; border: 1px solid #2b3a4e; border-radius: 4px; color: #ffffff;">
+                            <option value="1">1 Passenger</option>
+                            <option value="2">2 Passengers</option>
+                            <option value="3">3 Passengers</option>
+                            <option value="4">4+ Passengers</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="class" style="display: block; margin-bottom: 5px; color: #8a99ad; font-size: 0.85rem;">Travel Class:</label>
+                        <select id="class" name="class" style="width: 100%; padding: 10px; background-color: #1c2a3a; border: 1px solid #2b3a4e; border-radius: 4px; color: #ffffff;">
+                            <option value="economy">Economy</option>
+                            <option value="premium">Premium Economy</option>
+                            <option value="business">Business Class</option>
+                            <option value="first">First Class</option>
+                        </select>
+                    </div>
+
+                    <!-- Dynamic Selection Summary Display -->
+                    <div id="selected-flight-summary" style="margin-bottom: 15px;">
+                        <p style="font-size: 0.85rem; color: #8a99ad; margin: 0;"><em>No flight selected yet. Click 'Select' next to any flight on the left.</em></p>
+                    </div>
+
+                    <button type="submit" style="width: 100%; padding: 12px; background-color: #00a8ff; color: #ffffff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.95rem;">Confirm &amp; Proceed to Booking</button>
+
+                    <!-- Green Centered Success Banner -->
+                    <div id="confirmation-message" style="display: none; text-align: center; margin-top: 15px; padding: 12px; background-color: rgba(0, 230, 118, 0.15); border: 1px solid #00e676; border-radius: 6px;">
+                        <h3 style="margin: 0; color: #00e676; font-size: 1.1rem; font-weight: bold;">
+                            ✓ Flight Booked Successfully!
+                        </h3>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer style="text-align: center; margin-top: 15px; border-top: 1px solid #2b3a4e; padding-top: 12px; color: #8a99ad;">
+        <p><small>&copy; 2026 AeroLink Systems. Built with pure HTML5.</small></p>
+    </footer>
+
+</body>
+</html>
